@@ -1,0 +1,808 @@
+{
+  "contractName": "EventEmitter",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_requestId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Fulfill",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_requestId",
+          "type": "uint256"
+        }
+      ],
+      "name": "emitFulfill",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "emitFulfillSelector",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "_selector",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.0+commit.26b70077\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_requestId\",\"type\":\"uint256\"}],\"name\":\"Fulfill\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_requestId\",\"type\":\"uint256\"}],\"name\":\"emitFulfill\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"emitFulfillSelector\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"_selector\",\"type\":\"bytes4\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/abdulhafiz/Documents/Projects/swipswap/contracts/contracts/SwipSwapEventEmitter.sol\":\"EventEmitter\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/abdulhafiz/Documents/Projects/swipswap/contracts/contracts/SwipSwapEventEmitter.sol\":{\"keccak256\":\"0xfca7fad81db980f9888399db92b0f85c057a0e0f3a49c77201728c38efa6be50\",\"urls\":[\"bzz-raw://94db56b754545852eaa0f8718e36dce512936612f78ea5665c9ad83d5883a454\",\"dweb:/ipfs/QmNT3UR1KJGeRCZDqeVobSEEirkWEZcKSD4o7V5zVxUtzs\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610163806100206000396000f3fe608060405234801561001057600080fd5b50600436106100355760003560e01c8062c4abfc1461003a57806377be53cd14610096575b600080fd5b6100426100dc565b60405180827bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19167bffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916815260200191505060405180910390f35b6100c2600480360360208110156100ac57600080fd5b81019080803590602001909291905050506100eb565b604051808215151515815260200191505060405180910390f35b60006377be53cd60e01b905090565b60007fb86a7c71c428ea302b89f0cabb959f3cc0966aad82fcb52a86cba7d1fb25ac4c826040518082815260200191505060405180910390a16001905091905056fea26469706673582212204ed536eff9a80d6db2199ef63f46546ba45988ab959d8a586eed4946f12c7b1b64736f6c63430006000033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100355760003560e01c8062c4abfc1461003a57806377be53cd14610096575b600080fd5b6100426100dc565b60405180827bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19167bffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916815260200191505060405180910390f35b6100c2600480360360208110156100ac57600080fd5b81019080803590602001909291905050506100eb565b604051808215151515815260200191505060405180910390f35b60006377be53cd60e01b905090565b60007fb86a7c71c428ea302b89f0cabb959f3cc0966aad82fcb52a86cba7d1fb25ac4c826040518082815260200191505060405180910390a16001905091905056fea26469706673582212204ed536eff9a80d6db2199ef63f46546ba45988ab959d8a586eed4946f12c7b1b64736f6c63430006000033",
+  "sourceMap": "58:328:1:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;58:328:1;;;;;;;",
+  "deployedSourceMap": "58:328:1:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;58:328:1;;;;;;;;;;;;;;;;;;;;;;;;265:119;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;130:125;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;130:125:1;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;265:119;317:16;352:25;;;345:32;;265:119;:::o;130:125::-;187:4;208:19;216:10;208:19;;;;;;;;;;;;;;;;;;244:4;237:11;;130:125;;;:::o",
+  "source": "pragma solidity ^0.6.0;\n\n// SPDX-License-Identifier: MIT\n\ncontract EventEmitter {\n    event Fulfill(uint256 _requestId);\n    \n    function emitFulfill(uint256 _requestId) public returns (bool) {\n        emit Fulfill(_requestId);\n        return true;\n    }\n    \n    function emitFulfillSelector() public pure returns (bytes4 _selector) {\n        return this.emitFulfill.selector;\n    }\n}\n",
+  "sourcePath": "/home/abdulhafiz/Documents/Projects/swipswap/contracts/contracts/SwipSwapEventEmitter.sol",
+  "ast": {
+    "absolutePath": "/home/abdulhafiz/Documents/Projects/swipswap/contracts/contracts/SwipSwapEventEmitter.sol",
+    "exportedSymbols": {
+      "EventEmitter": [
+        63
+      ]
+    },
+    "id": 64,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 63,
+        "linearizedBaseContracts": [
+          63
+        ],
+        "name": "EventEmitter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 38,
+            "name": "Fulfill",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 37,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36,
+                  "indexed": false,
+                  "name": "_requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 38,
+                  "src": "100:18:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 35,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "100:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "99:20:1"
+            },
+            "src": "86:34:1"
+          },
+          {
+            "body": {
+              "id": 51,
+              "nodeType": "Block",
+              "src": "193:62:1",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 46,
+                        "name": "_requestId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 40,
+                        "src": "216:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 45,
+                      "name": "Fulfill",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 38,
+                      "src": "208:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 47,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "208:19:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 48,
+                  "nodeType": "EmitStatement",
+                  "src": "203:24:1"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 49,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "244:4:1",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 44,
+                  "id": 50,
+                  "nodeType": "Return",
+                  "src": "237:11:1"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "77be53cd",
+            "id": 52,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "emitFulfill",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 41,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 40,
+                  "name": "_requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 52,
+                  "src": "151:18:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 39,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "151:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "150:20:1"
+            },
+            "returnParameters": {
+              "id": 44,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 52,
+                  "src": "187:4:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 42,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "187:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "186:6:1"
+            },
+            "scope": 63,
+            "src": "130:125:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 61,
+              "nodeType": "Block",
+              "src": "335:49:1",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 57,
+                        "name": "this",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3234,
+                        "src": "352:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_EventEmitter_$63",
+                          "typeString": "contract EventEmitter"
+                        }
+                      },
+                      "id": 58,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "emitFulfill",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 52,
+                      "src": "352:16:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$_t_bool_$",
+                        "typeString": "function (uint256) external returns (bool)"
+                      }
+                    },
+                    "id": 59,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "selector",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": null,
+                    "src": "352:25:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "functionReturnParameters": 56,
+                  "id": 60,
+                  "nodeType": "Return",
+                  "src": "345:32:1"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "00c4abfc",
+            "id": 62,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "emitFulfillSelector",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 53,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "293:2:1"
+            },
+            "returnParameters": {
+              "id": 56,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 55,
+                  "name": "_selector",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 62,
+                  "src": "317:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 54,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "317:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "316:18:1"
+            },
+            "scope": 63,
+            "src": "265:119:1",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 64,
+        "src": "58:328:1"
+      }
+    ],
+    "src": "0:387:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/abdulhafiz/Documents/Projects/swipswap/contracts/contracts/SwipSwapEventEmitter.sol",
+    "exportedSymbols": {
+      "EventEmitter": [
+        63
+      ]
+    },
+    "id": 64,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 63,
+        "linearizedBaseContracts": [
+          63
+        ],
+        "name": "EventEmitter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 38,
+            "name": "Fulfill",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 37,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36,
+                  "indexed": false,
+                  "name": "_requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 38,
+                  "src": "100:18:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 35,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "100:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "99:20:1"
+            },
+            "src": "86:34:1"
+          },
+          {
+            "body": {
+              "id": 51,
+              "nodeType": "Block",
+              "src": "193:62:1",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 46,
+                        "name": "_requestId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 40,
+                        "src": "216:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 45,
+                      "name": "Fulfill",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 38,
+                      "src": "208:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 47,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "208:19:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 48,
+                  "nodeType": "EmitStatement",
+                  "src": "203:24:1"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 49,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "244:4:1",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 44,
+                  "id": 50,
+                  "nodeType": "Return",
+                  "src": "237:11:1"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "77be53cd",
+            "id": 52,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "emitFulfill",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 41,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 40,
+                  "name": "_requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 52,
+                  "src": "151:18:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 39,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "151:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "150:20:1"
+            },
+            "returnParameters": {
+              "id": 44,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 52,
+                  "src": "187:4:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 42,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "187:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "186:6:1"
+            },
+            "scope": 63,
+            "src": "130:125:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 61,
+              "nodeType": "Block",
+              "src": "335:49:1",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 57,
+                        "name": "this",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3234,
+                        "src": "352:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_EventEmitter_$63",
+                          "typeString": "contract EventEmitter"
+                        }
+                      },
+                      "id": 58,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "emitFulfill",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 52,
+                      "src": "352:16:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$_t_bool_$",
+                        "typeString": "function (uint256) external returns (bool)"
+                      }
+                    },
+                    "id": 59,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "selector",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": null,
+                    "src": "352:25:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "functionReturnParameters": 56,
+                  "id": 60,
+                  "nodeType": "Return",
+                  "src": "345:32:1"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "00c4abfc",
+            "id": 62,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "emitFulfillSelector",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 53,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "293:2:1"
+            },
+            "returnParameters": {
+              "id": 56,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 55,
+                  "name": "_selector",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 62,
+                  "src": "317:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 54,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "317:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "316:18:1"
+            },
+            "scope": 63,
+            "src": "265:119:1",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 64,
+        "src": "58:328:1"
+      }
+    ],
+    "src": "0:387:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.0+commit.26b70077.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.5",
+  "updatedAt": "2020-10-22T08:24:38.278Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
