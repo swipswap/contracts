@@ -2,7 +2,7 @@ pragma solidity ^0.6.0;
 
 // SPDX-License-Identifier: MIT
 
-contract EventEmitter {
+contract SwipSwapEventEmitter {
     event Fulfill(uint256 _requestId);
     
     function emitFulfill(uint256 _requestId) public returns (bool) {

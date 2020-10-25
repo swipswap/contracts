@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
-import "https://raw.githubusercontent.com/smartcontractkit/chainlink/develop/evm-contracts/src/v0.6/ChainlinkClient.sol";
+// import "https://raw.githubusercontent.com/smartcontractkit/chainlink/develop/evm-contracts/src/v0.6/ChainlinkClient.sol";
+import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 
 /** @title Token abstract. */
 contract Token {
@@ -89,7 +90,7 @@ contract SwipSwapPool is ChainlinkClient {
         coindecimals = _coindecimals;
         eventEmitter = _eventEmitter;
         
-        PoolInitialized(msg.sender, _initiator, _token);
+        emit PoolInitialized(msg.sender, _initiator, _token);
     }
     
     /** @dev Transfers token.
@@ -168,7 +169,7 @@ contract SwipSwapPool is ChainlinkClient {
         });
         locks[_sender][1] = newLock;
         
-        PoolJoined(_sender, _amount);
+        emit PoolJoined(_sender, _amount);
         return true;
     }
     
@@ -283,7 +284,7 @@ contract SwipSwapPool is ChainlinkClient {
             callData: ""
         });
         locks[_poolAddress][nextIndex] = _newLock;
-        NewLock(_sender, _poolAddress, nextIndex, _tokenAmount);
+        emit NewLock(_sender, _poolAddress, nextIndex, _tokenAmount);
         return true;
     }
     
@@ -333,7 +334,7 @@ contract SwipSwapPool is ChainlinkClient {
         requestIdFulfillReqCount[_requestId] = fulfillReqCount;
         pendingPaymentIndexLock[fulfillReqCount] = _lock;
         
-        FulfillLock(msg.sender, _lockAddress, _index, _lock.tokenAmount, _requestId);
+        emit FulfillLock(msg.sender, _lockAddress, _index, _lock.tokenAmount, _requestId);
         return true;
     }
 
