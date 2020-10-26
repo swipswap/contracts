@@ -1,3 +1,6 @@
 .secret
 node_modules/
 build/
+node/.chainlink-local/log.jsonl
+node/.chainlink-local/secret
+node/.chainlink-local/tempkeys
