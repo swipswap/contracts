@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >0.6.0;
 
-// import "https://raw.githubusercontent.com/smartcontractkit/chainlink/develop/evm-contracts/src/v0.6/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 
 /** @title Token abstract. */
@@ -31,6 +30,8 @@ contract SwipSwapPool is ChainlinkClient {
     bool private initialized;
     
     uint256 public coindecimals;
+    uint256 public tokendecimals;
+    uint256 public rate;
     
     address payable public initiator;
     address payable public deployer;
@@ -70,11 +71,12 @@ contract SwipSwapPool is ChainlinkClient {
     mapping (uint256 => Lock) pendingPaymentIndexLock;
     mapping (bytes32 => uint256) requestIdFulfillReqCount;
     
-    constructor() public {
-        setChainlinkToken(0x87AE97F105Eba72E3B26dBB27B09bDE5943Df2bD);
-        oracle = 0xDccc8028CFB3f8d489719bBFC7389b00b3D4AFC3;
-        jobId = "387c3a2344e04c398587afd13f50cea5";
+    constructor(address _chainlinkToken, address _oracle, bytes32 _jobID) public {
+        setChainlinkToken(_chainlinkToken);
+        oracle = _oracle;
+        jobId = _jobID;
         fee = 0.1 * 10 ** 18; // 0.1 LINK
+        rate = 13000;
     }
     
     /** @dev Initializes a pool after the contract has been deployed by the factory.
@@ -83,11 +85,12 @@ contract SwipSwapPool is ChainlinkClient {
       * @param _coindecimals Decimals of the token being added.
       * @param _eventEmitter Address of the eventEmitter contract.
       */
-    function initialize(address payable _initiator, address _token, uint256 _coindecimals, address _eventEmitter) public {
+    function initialize(address payable _initiator, address _token, uint256 _coindecimals, uint256 _tokendecimals, address _eventEmitter) public {
         deployer = msg.sender; // this should be the deploying contract
         initiator = _initiator;
         token = Token(_token);
         coindecimals = _coindecimals;
+        tokendecimals = _tokendecimals;
         eventEmitter = _eventEmitter;
         
         emit PoolInitialized(msg.sender, _initiator, _token);
@@ -116,6 +119,13 @@ contract SwipSwapPool is ChainlinkClient {
         }else {
             require(Token(token).transfer(_to, _amount));
         }
+    }
+
+    /** @dev Set a new exchange rate
+        @param _newRate New exchange rate
+     */
+    function setRate(uint256 _newRate) private {
+        rate = _newRate;
     }
     
     /** @dev Sets address of the eventEmitter.
@@ -249,7 +259,7 @@ contract SwipSwapPool is ChainlinkClient {
         uint256 nextIndex;
         require(!_pool.isLocked, ": Pool is locked by the owner");
         address payable _sender = msg.sender;
-        uint256 _tokenAmount = _coinAmount * 100 * 10**(18-coindecimals); // 0.0010000 btc = 100eth  ==> (1 * 10**8)/10**8) * rate(100 eth/btc) * 10**(18) ==> 100 * 10**18
+        uint256 _tokenAmount = (_coinAmount * rate * 10**(tokendecimals+18 - coindecimals)) / 10**18;
         // transferToken(_sender, _token, _tokenAmount);
         if (_index == 0){ // create newLock from balance
             require(_pool.unlockedAmount >= _tokenAmount, ": Insufficient pool balance");
@@ -370,7 +380,6 @@ contract SwipSwapPool is ChainlinkClient {
         require(!_lock.isFinalised, ": Payment has already been finalised");
         _lock.isFinalised = true;
         if(_lock.predefinedCall == 0){
-            _lock.locker.transfer(_lock.tokenAmount);
             transferTokenOut(_lock.locker, _lock.tokenAmount);
         }
         pendingPaymentIndexLock[_fulfillReqCount] = _lock;

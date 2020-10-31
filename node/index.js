@@ -5,12 +5,12 @@
 const ethers = require("ethers")
 const axios = require("axios")
 const config = require("./config/config.json")
-const { tokenABI, oracleABI, erc20TokenABI, eventEmitterABI, swipswapABI } = require("./prebuild/abi")
+const { tokenABI, oracleABI } = require("./prebuild/abi")
 const { tokenBytecode, oracleBytecode } = require("./prebuild/bytecodes")
-const swipswapBytecode = require("./prebuild/swipswap")
-const erc20TokenBytecode = require("./prebuild/token")
-const eventEmitterBytecode = require("./prebuild/eventEmitter")
 
+const {abi: erc20TokenABI, bytecode: erc20TokenBytecode} = require("../build/contracts/TOEKN.json")
+const {abi: eventEmitterABI, bytecode: eventEmitterBytecode} = require("../build/contracts/SwipSwapEventEmitter.json")
+const {abi: swipswapABI, bytecode: swipswapBytecode} = require("../build/contracts/SwipSwapPool.json")
 
 const connectAndGetProvider = async () => {
     const provider = new ethers.providers.JsonRpcProvider("http://0.0.0.0:6690")
@@ -115,6 +115,7 @@ const main = async (callbackFunction=()=>{}) => {
     await fundAddress(config.testAddress)
 
     const chainlinkToken = await deployChainlinkToken(knownSigner)
+    console.log("deployed chainlink token")
 
     const nodeAddress = await getNodeAddress()
     if(nodeAddress === ""){
@@ -126,6 +127,7 @@ const main = async (callbackFunction=()=>{}) => {
     await chainlinkToken.transfer(config.testAddress, ethers.utils.parseEther("1000"))
     
     const chainlinOracle = await setupChainlinkOracle(knownSigner, chainlinkToken.address, nodeAddress)
+    console.log("setup chainlink oracle")
 
     _store = {..._store, chainlinkToken, provider, knownSigner, chainlinOracle, nodeAddress}
 
@@ -144,10 +146,12 @@ const callbackFunction = async (store) => {
     const chainlinOracleAddress = store.chainlinOracle.address
 
     const tusdContract = await deployTUSDToken(knownSigner)
+    console.log("deployed tusd token")
     const tusdContractAddress = tusdContract.address
     await tusdContract.transfer(config.testAddress, '500000000')
 
     const eventEmitterContract = await deployEventEmitter(knownSigner)
+    console.log("deployed event emitter")
     const eventEmitterAddress = eventEmitterContract.address
 
     
@@ -164,8 +168,9 @@ const callbackFunction = async (store) => {
     const getAddressJobID = getAddressJobRes.data.data.id
     
     const swipswapContract = await deploySwipswapContract(chainlinkTokenAddress, chainlinOracleAddress, ethers.utils.toUtf8Bytes(getAddressJobID), knownSigner)
+    console.log("deployed swipswap pool")
     const swipswapAddress = swipswapContract.address
-    await swipswapContract.initiaze(config.testAddress, tusdContractAddress, 8, 3, eventEmitterAddress)
+    await swipswapContract.initialize(config.testAddress, tusdContractAddress, 8, 3, eventEmitterAddress)
     await store.chainlinkToken.transfer(swipswapAddress,ethers.utils.parseEther("1000"))
 
     const paymentJob = require("./config/finalize.spec.json")
@@ -190,5 +195,16 @@ const callbackFunction = async (store) => {
 // main(callbackFunction)
 module.exports = {
     setupNode: main,
-    callbackFunction
+    callbackFunction,
+    connectAndGetProvider,
+    getKnownSigner,
+    getAddressFunder,
+    deployChainlinkToken,
+    deployTUSDToken,
+    deployEventEmitter,
+    deploySwipswapContract,
+    setupChainlinkOracle,
+    sleep,
+    getNodeAddress,
+    authenticate,
 }
