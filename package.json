@@ -7,7 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:node": "cd ./node && docker-compose up -d && cd ..",
+    "stop": "cd ./node && docker-compose down && cd ..",
+    "compile": "truffle compile",
+    "deploy": "truffle deploy",
+    "start": "npm run start:node && npm run deploy"
   },
   "repository": {
     "type": "git",
@@ -22,6 +27,9 @@
   "homepage": "https://github.com/swipswap/contracts#readme",
   "dependencies": {
     "@chainlink/contracts": "0.0.10",
-    "@truffle/hdwallet-provider": "^1.1.1"
+    "@openzeppelin/contracts": "3.2.0",
+    "@truffle/hdwallet-provider": "^1.1.1",
+    "axios": "0.20.0",
+    "ethers": "5.0.17"
   }
 }

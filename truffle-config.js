@@ -23,9 +23,9 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-const privateKey = fs.readFileSync(".secret").toString().trim();
+// const privateKey = fs.readFileSync(".secret").toString().trim();
 
-const config = require('../chainlink_local_node/config/config.json')
+const config = require('./node/config/config.json')
 
 module.exports = {
   /**
@@ -49,10 +49,6 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 6690,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
-      provider: () => privateKey ? 
-        new HDWalletProvider({privateKeys: [privateKey], providerOrUrl: 'http://localhost:6690'}) :
-        new HDWalletProvider({mnemonic: config.mnemonic, providerOrUrl: 'http://localhost:6690'})
-        ,
     },
     // Another network with more advanced options...
     // advanced: {
@@ -89,7 +85,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.6.0",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.6.9",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {

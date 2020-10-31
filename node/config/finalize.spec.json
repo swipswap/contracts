@@ -1,0 +1,26 @@
+{
+  "initiators": [
+    {
+      "type": "ethlog",
+      "params": { "address": "0x6A7D7BcE0424F369082c4b85Bc3A72DB4Bf85e09" }
+    }
+  ],
+  "tasks": [
+    {
+      "type": "Copy",
+      "params": {
+        "copyPath": ["data"]
+      }
+    },
+    { "type": "EthUint256" },
+    {
+      "type": "EthTx",
+      "params": {
+        "address": "0xc1Ab6FeF8E9Da2f461B9589722F1b1E58D06C211",
+        "functionSelector": "0xa4724fe8"
+      }
+    }
+  ],
+  "startAt": "2020-02-09T15:13:03Z",
+  "endAt": null
+}
