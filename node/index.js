@@ -165,6 +165,7 @@ const callbackFunction = async (store) => {
     const swipTokenContract = await deploySWIPToken(knownSigner)
     console.log('deployed SWIP token')
     const swipTokenContractAddress = swipTokenContract.address
+    await swipTokenContract.transfer(config.testAddress, '1000000000')
     
     const authRes = await authenticate()
     const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
