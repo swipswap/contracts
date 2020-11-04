@@ -11,6 +11,7 @@ const { tokenBytecode, oracleBytecode } = require("./prebuild/bytecodes")
 const {abi: erc20TokenABI, bytecode: erc20TokenBytecode} = require("../build/contracts/TOEKN.json")
 const {abi: eventEmitterABI, bytecode: eventEmitterBytecode} = require("../build/contracts/SwipSwapEventEmitter.json")
 const {abi: swipswapABI, bytecode: swipswapBytecode} = require("../build/contracts/SwipSwapPool.json")
+const {abi: swipTokenABI, bytecode: swipTokenBytecode} = require("../build/contracts/SwipToken.json")
 
 const connectAndGetProvider = async () => {
     const provider = new ethers.providers.JsonRpcProvider("http://0.0.0.0:6690")
@@ -71,6 +72,13 @@ const setupChainlinkOracle = async (signer, linkToken, nodeAddress) => {
     const contract = await factory.deploy(linkToken)
     contract.deployTransaction.wait()
     await contract.setFulfillmentPermission(nodeAddress, true)
+    return contract
+}
+
+const deploySWIPToken = async (signer) => {
+    const factory = new ethers.ContractFactory(swipTokenABI, swipTokenBytecode, signer)
+    const contract = await factory.deploy(10_000, 1_000_000_000)
+    contract.deployTransaction.wait()
     return contract
 }
 
@@ -154,6 +162,9 @@ const callbackFunction = async (store) => {
     console.log("deployed event emitter")
     const eventEmitterAddress = eventEmitterContract.address
 
+    const swipTokenContract = await deploySWIPToken(knownSigner)
+    console.log('deployed SWIP token')
+    const swipTokenContractAddress = swipTokenContract.address
     
     const authRes = await authenticate()
     const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
@@ -188,7 +199,8 @@ const callbackFunction = async (store) => {
         eventEmitterAddress,
         bridgeID,
         paymentJobID,
-        swipswapAddress
+        swipswapAddress,
+        swipTokenContractAddress
     })
 }
 
