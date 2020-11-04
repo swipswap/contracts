@@ -2,12 +2,10 @@
 
 pragma solidity >= 0.5.0 < 0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
+import "./ERC20Token.sol";
 
 
-contract SwipToken is Context, ERC20 {
+contract SwipToken is TOEKN {
     
     uint256 private _stakeUnit;
     mapping (address => uint256) private _balances;
@@ -33,8 +31,7 @@ contract SwipToken is Context, ERC20 {
     constructor(
         uint256 stakeUnit,
         uint256 supply
-    ) ERC20("Swip Swap", "SWIP") public {
-        _mint(msg.sender, supply);
+    ) TOEKN("Swip Swap", "SWIP", supply) public {
         _stakeUnit = stakeUnit;
     }
     
