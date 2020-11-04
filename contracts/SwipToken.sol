@@ -33,7 +33,7 @@ contract SwipToken is Context, ERC20 {
     constructor(
         uint256 stakeUnit,
         uint256 supply
-    ) ERC20("Swip", "SWIP") public {
+    ) ERC20("Swip Swap", "SWIP") public {
         _mint(msg.sender, supply);
         _stakeUnit = stakeUnit;
     }
