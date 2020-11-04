@@ -77,7 +77,7 @@ const setupChainlinkOracle = async (signer, linkToken, nodeAddress) => {
 
 const deploySWIPToken = async (signer) => {
     const factory = new ethers.ContractFactory(swipTokenABI, swipTokenBytecode, signer)
-    const contract = await factory.deploy(10_000, 1_000_000_000)
+    const contract = await factory.deploy(10_000_000, 1_000_000_000_000)
     contract.deployTransaction.wait()
     return contract
 }
@@ -165,7 +165,7 @@ const callbackFunction = async (store) => {
     const swipTokenContract = await deploySWIPToken(knownSigner)
     console.log('deployed SWIP token')
     const swipTokenContractAddress = swipTokenContract.address
-    await swipTokenContract.transfer(config.testAddress, '1000000000')
+    await swipTokenContract.transfer(config.testAddress, 1_000_000_000_000)
     
     const authRes = await authenticate()
     const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
