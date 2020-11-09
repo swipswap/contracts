@@ -46,9 +46,9 @@ const deployChainlinkToken = async (signer) => {
     return contract
 }
 
-const deployTUSDToken = async (signer) => {
+const deployFUSDToken = async (signer) => {
     const factory = new ethers.ContractFactory(erc20TokenABI, erc20TokenBytecode, signer)
-    const contract = await factory.deploy("Test USD","TUSD", 1_000_000_000)
+    const contract = await factory.deploy("Fake USD","FUSD", 1_000_000_000)
     contract.deployTransaction.wait()
     return contract
 }
@@ -153,10 +153,10 @@ const callbackFunction = async (store) => {
     const chainlinkTokenAddress = store.chainlinkToken.address
     const chainlinOracleAddress = store.chainlinOracle.address
 
-    const tusdContract = await deployTUSDToken(knownSigner)
-    console.log("deployed tusd token")
-    const tusdContractAddress = tusdContract.address
-    await tusdContract.transfer(config.testAddress, '500000000')
+    const fusdContract = await deployFUSDToken(knownSigner)
+    console.log("deployed fusd token")
+    const fusdContractAddress = fusdContract.address
+    await fusdContract.transfer(config.testAddress, '500000000')
 
     const eventEmitterContract = await deployEventEmitter(knownSigner)
     console.log("deployed event emitter")
@@ -177,7 +177,7 @@ const callbackFunction = async (store) => {
     const swipswapContract = await deploySwipswapContract(chainlinkTokenAddress, chainlinOracleAddress, ethers.utils.toUtf8Bytes(getAddressJobID), knownSigner)
     console.log("deployed swipswap pool")
     const swipswapAddress = swipswapContract.address
-    await swipswapContract.initialize(config.testAddress, tusdContractAddress, 8, 3, eventEmitterAddress)
+    await swipswapContract.initialize(config.testAddress, fusdContractAddress, 8, 3, eventEmitterAddress)
     await store.chainlinkToken.transfer(swipswapAddress,ethers.utils.parseEther("1000"))
 
     const paymentJob = require("./config/finalize.spec.json")
@@ -196,7 +196,7 @@ const callbackFunction = async (store) => {
         chainlinkTokenAddress,
         chainlinOracleAddress,
         nodeAddress:    store.nodeAddress,
-        tusdContractAddress,
+        fusdContractAddress,
         eventEmitterAddress,
         bridgeID,
         paymentJobID,
@@ -213,7 +213,7 @@ module.exports = {
     getKnownSigner,
     getAddressFunder,
     deployChainlinkToken,
-    deployTUSDToken,
+    deployFUSDToken,
     deployEventEmitter,
     deploySwipswapContract,
     setupChainlinkOracle,
