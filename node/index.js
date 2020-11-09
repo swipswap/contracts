@@ -77,7 +77,7 @@ const setupChainlinkOracle = async (signer, linkToken, nodeAddress) => {
 
 const deploySWIPToken = async (signer) => {
     const factory = new ethers.ContractFactory(swipTokenABI, swipTokenBytecode, signer)
-    const contract = await factory.deploy(10_000_000, 1_000_000_000_000)
+    const contract = await factory.deploy(10_000, 1_000_000_000)
     contract.deployTransaction.wait()
     return contract
 }
@@ -161,11 +161,6 @@ const callbackFunction = async (store) => {
     const eventEmitterContract = await deployEventEmitter(knownSigner)
     console.log("deployed event emitter")
     const eventEmitterAddress = eventEmitterContract.address
-
-    const swipTokenContract = await deploySWIPToken(knownSigner)
-    console.log('deployed SWIP token')
-    const swipTokenContractAddress = swipTokenContract.address
-    await swipTokenContract.transfer(config.testAddress, 1_000_000_000_000)
     
     const authRes = await authenticate()
     const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
@@ -191,6 +186,11 @@ const callbackFunction = async (store) => {
 
     const paymentJobRes = await axios.post("http://localhost:6688/v2/specs",paymentJob,{headers})
     const paymentJobID = paymentJobRes.data.data.id
+
+    const swipTokenContract = await deploySWIPToken(knownSigner)
+    console.log('deployed SWIP token')
+    const swipTokenContractAddress = swipTokenContract.address
+    await swipTokenContract.transfer(config.testAddress, 1_000_000_000)
 
     console.log({
         chainlinkTokenAddress,
