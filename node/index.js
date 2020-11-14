@@ -11,6 +11,7 @@ const { tokenBytecode, oracleBytecode } = require("./prebuild/bytecodes")
 const {abi: erc20TokenABI, bytecode: erc20TokenBytecode} = require("../build/contracts/TOEKN.json")
 const {abi: eventEmitterABI, bytecode: eventEmitterBytecode} = require("../build/contracts/SwipSwapEventEmitter.json")
 const {abi: swipswapABI, bytecode: swipswapBytecode} = require("../build/contracts/SwipSwapPool.json")
+const {abi: swipTokenABI, bytecode: swipTokenBytecode} = require("../build/contracts/SwipToken.json")
 
 const connectAndGetProvider = async () => {
     const provider = new ethers.providers.JsonRpcProvider("http://0.0.0.0:6690")
@@ -45,9 +46,9 @@ const deployChainlinkToken = async (signer) => {
     return contract
 }
 
-const deployTUSDToken = async (signer) => {
+const deployFUSDToken = async (signer) => {
     const factory = new ethers.ContractFactory(erc20TokenABI, erc20TokenBytecode, signer)
-    const contract = await factory.deploy("Test USD","TUSD", 1_000_000_000)
+    const contract = await factory.deploy("Fake USD","FUSD", 1_000_000_000)
     contract.deployTransaction.wait()
     return contract
 }
@@ -71,6 +72,13 @@ const setupChainlinkOracle = async (signer, linkToken, nodeAddress) => {
     const contract = await factory.deploy(linkToken)
     contract.deployTransaction.wait()
     await contract.setFulfillmentPermission(nodeAddress, true)
+    return contract
+}
+
+const deploySWIPToken = async (signer) => {
+    const factory = new ethers.ContractFactory(swipTokenABI, swipTokenBytecode, signer)
+    const contract = await factory.deploy(10_000, 1_000_000_000)
+    contract.deployTransaction.wait()
     return contract
 }
 
@@ -145,15 +153,14 @@ const callbackFunction = async (store) => {
     const chainlinkTokenAddress = store.chainlinkToken.address
     const chainlinOracleAddress = store.chainlinOracle.address
 
-    const tusdContract = await deployTUSDToken(knownSigner)
-    console.log("deployed tusd token")
-    const tusdContractAddress = tusdContract.address
-    await tusdContract.transfer(config.testAddress, '500000000')
+    const fusdContract = await deployFUSDToken(knownSigner)
+    console.log("deployed fusd token")
+    const fusdContractAddress = fusdContract.address
+    await fusdContract.transfer(config.testAddress, '500000000')
 
     const eventEmitterContract = await deployEventEmitter(knownSigner)
     console.log("deployed event emitter")
     const eventEmitterAddress = eventEmitterContract.address
-
     
     const authRes = await authenticate()
     const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
@@ -170,7 +177,7 @@ const callbackFunction = async (store) => {
     const swipswapContract = await deploySwipswapContract(chainlinkTokenAddress, chainlinOracleAddress, ethers.utils.toUtf8Bytes(getAddressJobID), knownSigner)
     console.log("deployed swipswap pool")
     const swipswapAddress = swipswapContract.address
-    await swipswapContract.initialize(config.testAddress, tusdContractAddress, 8, 3, eventEmitterAddress)
+    await swipswapContract.initialize(config.testAddress, fusdContractAddress, 8, 3, eventEmitterAddress)
     await store.chainlinkToken.transfer(swipswapAddress,ethers.utils.parseEther("1000"))
 
     const paymentJob = require("./config/finalize.spec.json")
@@ -180,15 +187,21 @@ const callbackFunction = async (store) => {
     const paymentJobRes = await axios.post("http://localhost:6688/v2/specs",paymentJob,{headers})
     const paymentJobID = paymentJobRes.data.data.id
 
+    const swipTokenContract = await deploySWIPToken(knownSigner)
+    console.log('deployed SWIP token')
+    const swipTokenContractAddress = swipTokenContract.address
+    await swipTokenContract.transfer(config.testAddress, 1_000_000_000)
+
     console.log({
         chainlinkTokenAddress,
         chainlinOracleAddress,
         nodeAddress:    store.nodeAddress,
-        tusdContractAddress,
+        fusdContractAddress,
         eventEmitterAddress,
         bridgeID,
         paymentJobID,
-        swipswapAddress
+        swipswapAddress,
+        swipTokenContractAddress
     })
 }
 
@@ -200,7 +213,7 @@ module.exports = {
     getKnownSigner,
     getAddressFunder,
     deployChainlinkToken,
-    deployTUSDToken,
+    deployFUSDToken,
     deployEventEmitter,
     deploySwipswapContract,
     setupChainlinkOracle,
