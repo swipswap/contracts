@@ -8,10 +8,10 @@ const config = require("./config/config.json")
 const { tokenABI, oracleABI } = require("./prebuild/abi")
 const { tokenBytecode, oracleBytecode } = require("./prebuild/bytecodes")
 
-const {abi: erc20TokenABI, bytecode: erc20TokenBytecode} = require("../build/contracts/TOEKN.json")
-const {abi: eventEmitterABI, bytecode: eventEmitterBytecode} = require("../build/contracts/SwipSwapEventEmitter.json")
-const {abi: swipswapABI, bytecode: swipswapBytecode} = require("../build/contracts/SwipSwapPool.json")
-const {abi: swipTokenABI, bytecode: swipTokenBytecode} = require("../build/contracts/SwipToken.json")
+const {abi: erc20TokenABI, bytecode: erc20TokenBytecode} = require("../artifacts/contracts/ERC20Token.sol/TOEKN.json")
+const {abi: eventEmitterABI, bytecode: eventEmitterBytecode} = require("../artifacts/contracts/SwipSwapEventEmitter.sol/SwipSwapEventEmitter.json")
+const {abi: swipswapABI, bytecode: swipswapBytecode} = require("../artifacts/contracts/SwipSwapPool.sol/SwipSwapPool.json")
+const {abi: swipTokenABI, bytecode: swipTokenBytecode} = require("../artifacts/contracts/SwipToken.sol/SwipToken.json")
 
 const connectAndGetProvider = async () => {
     const provider = new ethers.providers.JsonRpcProvider("http://0.0.0.0:6690")
