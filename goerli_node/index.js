@@ -4,10 +4,10 @@ const config = require("./config/config.json")
 const { tokenABI, oracleABI } = require("./prebuild/abi")
 const { goerliDetails } = require('../nodeDetails')
 
-const { abi: erc20TokenABI } = require("../build/contracts/TOEKN.json")
-const { abi: eventEmitterABI } = require("../build/contracts/SwipSwapEventEmitter.json")
-const { abi: swipswapABI } = require("../build/contracts/SwipSwapPool.json")
-const { abi: swipTokenABI } = require("../build/contracts/SwipToken.json")
+const { abi: erc20TokenABI } = require("../artifacts/contracts/ERC20Token.sol/TOEKN.json")
+const { abi: eventEmitterABI } = require("../artifacts/contracts/SwipSwapEventEmitter.sol/SwipSwapEventEmitter.json")
+const { abi: swipswapABI } = require("../artifacts/contracts/SwipSwapPool.sol/SwipSwapPool.json")
+const { abi: swipTokenABI } = require("../artifacts/contracts/SwipToken.sol/SwipToken.json")
 
 const getSigner = async () => {
     const provider = new ethers.providers.AlchemyProvider('goerli', '9GJ40fZ1PGwqID6jUHOyzdyEsPLqE7Kn')
