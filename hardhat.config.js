@@ -1,4 +1,4 @@
-const {setupNode, callbackFunction} = require("./node")
+const {setupNode, callbackFunction} = require("./local_node")
 
 task("startnode", "Auto deploy and set up", async () => {
     try {

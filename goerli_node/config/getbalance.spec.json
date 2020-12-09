@@ -1,0 +1,17 @@
+{
+  "initiators": [
+    {
+      "type": "RunLog",
+      "params": { "address": "0xDccc8028CFB3f8d489719bBFC7389b00b3D4AFC3" }
+    }
+  ],
+  "tasks": [
+    {
+      "type": "getpubkeybalance"
+    },
+    { "type": "EthUint256" },
+    { "type": "EthTx" }
+  ],
+  "startAt": "2020-02-09T15:13:03Z",
+  "endAt": null
+}

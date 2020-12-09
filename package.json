@@ -8,18 +8,17 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:node": "cd ./node && docker-compose -f docker-compose-local.yml up -d && cd ..",
-    "stop": "cd ./node && docker-compose -f docker-compose-local.yml down && cd ..",
-    "start:node-ropsten": "cd ./node && docker-compose -f docker-compose-ropsten.yml up -d && cd ..",
-    "stop:ropsten": "cd ./node && docker-compose -f docker-compose-ropsten.yml down && cd ..",
-    "start:node-goerli": "cd ./node && docker-compose -f docker-compose-goerli.yml up -d && cd ..",
-    "stop:goerli": "cd ./node && docker-compose -f docker-compose-goerli.yml down && cd ..",
     "compile": "truffle compile",
     "deploy": "truffle deploy",
     "hardhat:deploy": "npx hardhat compile && npx hardhat startnode",
-    "start": "npm run start:node && sleep 2 && npm run hardhat:deploy",
-    "start:ropsten":"npm run start:node-ropsten && sleep 2 && npm run hardhat:deploy",
-    "start:goerli":"npm run start:node-goerli && sleep 2 && npm run hardhat:deploy"
+    "start:node": "cd ./local_node && docker-compose up -d && cd ..",
+    "start:node-goerli": "cd ./goerli_node && docker-compose up -d && cd ..",
+    "start:local": "npm run start:node && sleep 2 && npm run hardhat:deploy",
+    "start:ropsten": "cd ./ropsten_node && docker-compose up -d && sleep 2 && node ./index.js && cd ..",
+    "start:goerli": "cd ./goerli_node && docker-compose up -d && sleep 2 && node ./index.js && cd ..",
+    "stop:local": "cd ./local_node && docker-compose down && cd ..",
+    "stop:ropsten": "cd ./ropsten_node && docker-compose down && cd ..",
+    "stop:goerli": "cd ./goerli_node && docker-compose down && cd .."
   },
   "repository": {
     "type": "git",
