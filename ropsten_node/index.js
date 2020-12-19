@@ -1,7 +1,7 @@
 const ethers = require("ethers")
 const axios = require("axios")
 const config = require("./config/config.json")
-const { tokenABI, oracleABI } = require("./prebuild/abi")
+const { tokenABI, oracleABI } = require("../prebuild/abi")
 const { ropstenDetails } = require('../nodeDetails')
 
 const { abi: erc20TokenABI } = require("../artifacts/contracts/ERC20Token.sol/TOEKN.json")
@@ -10,16 +10,14 @@ const { abi: swipswapABI } = require("../artifacts/contracts/SwipSwapPool.sol/Sw
 const { abi: swipTokenABI } = require("../artifacts/contracts/SwipToken.sol/SwipToken.json")
 
 const getSigner = async () => {
-    const provider = new ethers.providers.AlchemyProvider('ropsten', 'ZiopotbNwrDjZTG1zVV7Tl0qkALAxjD1')
+    const provider = new ethers.providers.getDefaultProvider('ropsten',{
+        etherscan: '7JTNTAD7VNR5F9CZ68JKCZSWI2ATZG7393',
+        infura: '15be5db7406e4da6a3079f577dadb2b5',
+        alchemy: 'ZiopotbNwrDjZTG1zVV7Tl0qkALAxjD1'
+    })
+
     const wallet = ethers.Wallet.fromMnemonic(config.mnemonic)
     return wallet.connect(provider)
-}
-const fundAddress = async (signer, address, value) => {
-    console.log(`Funding ${address} with ${value} Eth`)
-    await signer.sendTransaction({
-        value: ethers.utils.parseEther(String(value)),
-        to: address
-    })
 }
 
 const connectChainlinkToken = async (address, abi, signer) => {
@@ -98,11 +96,6 @@ const main = async (callbackFunction=()=>{}) => {
         return
     }
     
-    // await fundAddress(knownSigner, nodeAddress, 0.001)
-
-    // await chainlinkToken.transfer(nodeAddress, ethers.utils.parseEther("100"))
-    // console.log('Transferred LINK to chainlink node successfully')
-    
     const chainlinkOracle = await setupChainlinkOracle(ropstenDetails.chainlinkOracleAddress, oracleABI, knownSigner, nodeAddress)
     console.log('Chainlink oracle setup completed')
 
@@ -122,36 +115,39 @@ const callbackFunction = async (store) => {
     const chainlinkTokenAddress = store.chainlinkToken.address
     const chainlinkOracleAddress = store.chainlinkOracle.address
 
-    const fusdContract = await connectFUSDToken(ropstenDetails.fusdContractAddress, erc20TokenABI, knownSigner)
-    console.log(`Connected to FUSD at ${ropstenDetails.fusdContractAddress}`)
+    try {
+
+        const fusdContract = await connectFUSDToken(ropstenDetails.fusdContractAddress, erc20TokenABI, knownSigner)
+        console.log(`Connected to FUSD at ${ropstenDetails.fusdContractAddress}`)
+        
+        const eventEmitterContract = await connectEventEmitter(ropstenDetails.eventEmitterAddress, eventEmitterABI, knownSigner)
+        console.log(`Connected to EventEmitter at ${ropstenDetails.eventEmitterAddress}`)
+        
+        const authRes = await authenticate()
+        const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
     
-    const eventEmitterContract = await connectEventEmitter(ropstenDetails.eventEmitterAddress, eventEmitterABI, knownSigner)
-    console.log(`Connected to EventEmitter at ${ropstenDetails.eventEmitterAddress}`)
+        const bridge = require("./config/bridge.json")
+        const bridgeRes = await axios.post("http://localhost:6688/v2/bridge_types", bridge,{headers})
+        const bridgeID = bridgeRes.data.data.id
+        
+        const getAddressJob = require("./config/getbalance.spec.json")
+        getAddressJob.initiators[0].params.address = chainlinkOracleAddress
+        
+        const swipswapContract = await connectSwipswapContract(ropstenDetails.swipswapAddress, swipswapABI, knownSigner)
+        console.log(`Connected to SwipSwapPool at ${swipswapContract.address}`)
     
-    const authRes = await authenticate()
-    const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}
-
-    const bridge = require("./config/bridge.json")
-    const bridgeRes = await axios.post("http://localhost:6688/v2/bridge_types", bridge,{headers})
-    const bridgeID = bridgeRes.data.data.id
+        const paymentJob = require("./config/finalize.spec.json")
+        paymentJob.initiators[0].params.address = eventEmitterContract.address
+        paymentJob.tasks[2].params.address = swipswapContract.address
     
-    const getAddressJob = require("./config/getbalance.spec.json")
-    getAddressJob.initiators[0].params.address = chainlinkOracleAddress
-
-    const getAddressJobRes = await axios.post("http://localhost:6688/v2/specs", getAddressJob,{headers})
+        // const paymentJobRes = await axios.post("http://localhost:6688/v2/specs",paymentJob,{headers})
+        // const paymentJobID = paymentJobRes.data.data.id
     
-    const swipswapContract = await connectSwipswapContract(ropstenDetails.swipswapAddress, swipswapABI, knownSigner)
-    console.log(`Connected to SwipSwapPool at ${swipswapContract.address}`)
-
-    const paymentJob = require("./config/finalize.spec.json")
-    paymentJob.initiators[0].params.address = eventEmitterContract.address
-    paymentJob.tasks[2].params.address = swipswapContract.address
-
-    const paymentJobRes = await axios.post("http://localhost:6688/v2/specs",paymentJob,{headers})
-    const paymentJobID = paymentJobRes.data.data.id
-
-    const swipTokenContract = await connectSWIPToken(ropstenDetails.swipTokenContractAddress, swipTokenABI, knownSigner)
-    console.log(`Connected to SWIP token at ${swipTokenContract.address}`)
+        const swipTokenContract = await connectSWIPToken(ropstenDetails.swipTokenContractAddress, swipTokenABI, knownSigner)
+        console.log(`Connected to SWIP token at ${swipTokenContract.address}`)
+    } catch(e) {
+        console.log(e)
+    }
 
     console.log({
         chainlinkTokenAddress,
@@ -166,4 +162,4 @@ const callbackFunction = async (store) => {
     })
 }
 
-main(callbackFunction)
+module.exports = { main, callbackFunction }

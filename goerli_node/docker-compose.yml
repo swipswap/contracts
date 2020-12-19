@@ -5,7 +5,7 @@ services:
         env_file: ./.chainlink-goerli/.env
         ports:
             - "6688:6688"
-        container_name: goerli_chainlink
+        container_name: chainlink_goerli
         volumes:
             - "${PWD}/.chainlink-goerli:/chainlink"
         restart: on-failure:5

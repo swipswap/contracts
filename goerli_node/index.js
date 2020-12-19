@@ -1,7 +1,7 @@
 const ethers = require("ethers")
 const axios = require("axios")
 const config = require("./config/config.json")
-const { tokenABI, oracleABI } = require("./prebuild/abi")
+const { tokenABI, oracleABI } = require("../prebuild/abi")
 const { goerliDetails } = require('../nodeDetails')
 
 const { abi: erc20TokenABI } = require("../artifacts/contracts/ERC20Token.sol/TOEKN.json")
@@ -123,10 +123,10 @@ const callbackFunction = async (store) => {
     const chainlinkOracleAddress = store.chainlinkOracle.address
 
     const fusdContract = await connectFUSDToken(goerliDetails.fusdContractAddress, erc20TokenABI, knownSigner)
-    console.log(`Connected to FUSD at ${goerliDetails.fusdContractAddress}`)
+    console.log(`Connected to FUSD at ${fusdContract.address}`)
     
     const eventEmitterContract = await connectEventEmitter(goerliDetails.eventEmitterAddress, eventEmitterABI, knownSigner)
-    console.log(`Connected to EventEmitter at ${goerliDetails.eventEmitterAddress}`)
+    console.log(`Connected to EventEmitter at ${eventEmitterContract.address}`)
     
     const authRes = await authenticate()
     const headers = {Cookie: authRes.headers['set-cookie'].join("; ")}

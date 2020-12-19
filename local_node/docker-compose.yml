@@ -9,7 +9,8 @@ services:
         volumes:
             - "${PWD}/.chainlink-local:/chainlink"
         restart: on-failure:5
-        command:  "local n -p /chainlink/.password -a /chainlink/.api"
+        command: local n -p /chainlink/.password -a /chainlink/.api
+        # command: local import /chainlink/keyfile
         networks:
             - app-network
 
@@ -25,6 +26,7 @@ services:
         volumes:
             - "./ca/server.crt:/var/lib/postgresql/server.crt:ro"
             - "./ca/server.key:/var/lib/postgresql/server.key:ro"
+            - "${PWD}/db:/var/lib/postgresql/data"
         networks:
             - app-network
 
