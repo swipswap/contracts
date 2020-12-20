@@ -10,7 +10,6 @@
     "hardhat": "./node_modules/.bin/hardhat",
     "compile": "npm run hardhat compile",
     "deploy:local": "npm run hardhat -- run scripts/local/deploy.js",
-    "mount:local": "npm run hardhat -- run --network localhost scripts/local/mount.js",
     "start:local": "cd local_node && docker-compose up -d",
     "restart:local": "cd local_node && docker-compose up -d chainlink",
     "stop:local": "cd local_node && docker-compose down",
