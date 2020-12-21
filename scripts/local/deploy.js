@@ -255,16 +255,6 @@ const callbackFunction = async (store) => {
 			console.log(`Skipping "deploy eventEmitter", found at ${localDeployments.eventEmitterAddress}`)
 			deploymentDetails.eventEmitterAddress = localDeployments.eventEmitterAddress
 		}
-		
-		// if(!localDeployments.chainlinkOracleAddress) {
-		// 	const chainlinkOracle = await setupChainlinkOracle(deploymentDetails.deployer, deploymentDetails.chainlinkTokenAddress, store.nodeAddress)
-		// 	deploymentDetails.chainlinkOracleAddress = chainlinkOracle.address
-		// 	console.log(`>>> Deployed oracle successfully at ${chainlinkOracle.address}`)
-			
-		// } else {
-		// 	console.log(`Skipping "deploy oracle", found at ${localDeployments.chainlinkOracleAddress}`)
-		// 	deploymentDetails.chainlinkOracleAddress = localDeployments.chainlinkOracleAddress
-		// }
 
 		if (getAddrJob.length > 0) {
 			deploymentDetails.getAddressJobID = getAddrJob[0].id
