@@ -20,6 +20,12 @@
     "stop:goerli": "cd goerli_node && docker-compose down",
     "conect:goerli": "npm run hardhat -- run scripts/goerli/mount.js",
 
+    "deploy:binance": "npm run hardhat -- run scripts/binance/deploy.js",
+    "start:binance": "cd binance_node && docker-compose up -d",
+    "restart:binance": "cd binance_node && docker-compose up -d chainlink",
+    "stop:binance": "cd binance_node && docker-compose down",
+    "conect:binance": "npm run hardhat -- run scripts/binance/mount.js",
+
     "deploy:ropsten": "npm run hardhat -- run scripts/ropsten/deploy.js",
     "connect:ropsten": "npm run hardhat -- run --network ropsten scripts/ropsten/mount.js",
     "start:ropsten": "cd ropsten_node && docker-compose up -d",

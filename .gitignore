@@ -6,3 +6,5 @@ node/.chainlink-local/secret
 node/.chainlink-local/tempkeys
 artifacts/
 cache/
+binance_node/db
+goerli_node/db
