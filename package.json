@@ -7,13 +7,18 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:node": "cd ./node && docker-compose up -d && cd ..",
-    "stop": "cd ./node && docker-compose down && cd ..",
-    "compile": "truffle compile",
-    "deploy": "truffle deploy",
-    "hardhat:deploy": "npx hardhat compile && npx hardhat startnode",
-    "start": "npm run start:node && sleep 2 && npm run hardhat:deploy"
+    "hardhat": "./node_modules/.bin/hardhat",
+    "compile": "npm run hardhat compile",
+    "deploy:local": "npm run hardhat -- run scripts/local/deploy.js",
+    "start:local": "cd local_node && docker-compose up -d",
+    "restart:local": "cd local_node && docker-compose up -d chainlink",
+    "stop:local": "cd local_node && docker-compose down",
+    
+    "deploy": "npm run hardhat -- run node/index.js",
+    "start": "cd node && docker-compose up -d && sleep 15 && npm run deploy",
+    "restart": "cd local_node && docker-compose up -d chainlink",
+    "rerun": "npm run deploy",
+    "stop": "cd node && docker-compose down"
   },
   "repository": {
     "type": "git",

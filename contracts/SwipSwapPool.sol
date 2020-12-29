@@ -86,12 +86,14 @@ contract SwipSwapPool is ChainlinkClient {
       * @param _eventEmitter Address of the eventEmitter contract.
       */
     function initialize(address payable _initiator, address _token, uint256 _coindecimals, uint256 _tokendecimals, address _eventEmitter) public {
+        require(!initialized, "Contract cannot be reinitialized");
         deployer = msg.sender; // this should be the deploying contract
         initiator = _initiator;
         token = Token(_token);
         coindecimals = _coindecimals;
         tokendecimals = _tokendecimals;
         eventEmitter = _eventEmitter;
+        initialized = true;
         
         emit PoolInitialized(msg.sender, _initiator, _token);
     }

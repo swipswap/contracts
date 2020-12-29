@@ -1,0 +1,50 @@
+{
+    "local": {
+        "network": "local",
+        "providerUrl": "http://0.0.0.0:6690",
+        "testAddress": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d",
+        "mnemonic": "code antenna attend wool cereal pig degree reunion place cousin letter fitness",
+        "deployments": {
+            "deployer": "0x68d6dD43c2BBdc878046D258623016980f44537D",
+            "nodeAddress": "0xCd3e121913ab1de9028893a912C096d679ad7369",
+            "bridgeID": "getpubkeybalance",
+            "chainlinkTokenAddress": "0x87AE97F105Eba72E3B26dBB27B09bDE5943Df2bD",
+            "chainlinkOracleAddress": "0x70953d968279f19873EAeE383E05286e8C740E9F",
+            "FUSDTokenAddress": "0xDccc8028CFB3f8d489719bBFC7389b00b3D4AFC3",
+            "eventEmitterAddress": "0xC27114F08a17A2308f00d0D6D3714d2E5bed1D73",
+            "getAddressJobID": "4640c9ba1c5b4bf480826c269634d78e",
+            "swipSwapAddress": "0x9E237f4a7AD90FfAFB0adEf703186F91428a6a38",
+            "paymentJobID": "37d1ee94389b48f28641cfd0db8c2d0a",
+            "SWIPTokenAddress": "0x9cd72d5d5584C28933082641Ff3986eB925B0731"
+        }
+    },
+    "goerli": {
+        "network": "goerli",
+        "testAddress": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
+        "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular",
+        "etherscan": "7JTNTAD7VNR5F9CZ68JKCZSWI2ATZG7393",
+        "infuraProjectId": "15be5db7406e4da6a3079f577dadb2b5",
+        "infuraProjectSecret": "6038650c6017459d8ec21a95b4c14afe",
+        "alchemy": "9GJ40fZ1PGwqID6jUHOyzdyEsPLqE7Kn"
+    },
+    "binance": {
+        "rpcEndpoint": "https://data-seed-prebsc-1-s1.binance.org:8545",
+        "testAddress": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
+        "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular"
+    },
+    "mainnet":{},
+    "deploymentSteps": [
+        "ensure deployer address is funded with ETH for non-mainnet",
+        "ensure test address is funded with ETH for non-mainnet",
+        "get chainlink node address",
+        "conpare node address to one in deployments config",
+        "ensure node address is funded with ETH for non-mainnet",
+        "====== callback ========",
+        "authenticate app to enable communication with chainlink node",
+        "get getpubkeybalance and emitter bridges",
+        "ensure chainlink token is deployed",
+        "ensure chinlink oracle is deployed",
+        "ensure eventEmmiter contract is deployed",
+        ""
+    ]
+}
