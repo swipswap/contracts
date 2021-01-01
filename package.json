@@ -7,12 +7,18 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:node": "cd ./node && docker-compose up -d && cd ..",
-    "stop": "cd ./node && docker-compose down && cd ..",
-    "compile": "truffle compile",
-    "deploy": "truffle deploy",
-    "start": "npm run start:node && npm run deploy"
+    "hardhat": "./node_modules/.bin/hardhat",
+    "compile": "npm run hardhat compile",
+    "deploy:local": "npm run hardhat -- run scripts/local/deploy.js",
+    "start:local": "cd local_node && docker-compose up -d",
+    "restart:local": "cd local_node && docker-compose up -d chainlink",
+    "stop:local": "cd local_node && docker-compose down",
+    
+    "deploy": "npm run hardhat -- run node/index.js",
+    "start": "cd node && docker-compose up -d && sleep 15 && npm run deploy",
+    "restart": "cd local_node && docker-compose up -d chainlink",
+    "rerun": "npm run deploy",
+    "stop": "cd node && docker-compose down"
   },
   "repository": {
     "type": "git",
@@ -26,10 +32,17 @@
   },
   "homepage": "https://github.com/swipswap/contracts#readme",
   "dependencies": {
-    "@chainlink/contracts": "0.0.10",
+    "@chainlink/contracts": "0.0.11",
     "@openzeppelin/contracts": "3.2.0",
     "@truffle/hdwallet-provider": "^1.1.1",
     "axios": "0.20.0",
+    "hardhat": "2.0.3"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "2.0.0",
+    "@nomiclabs/hardhat-waffle": "2.0.0",
+    "chai": "4.2.0",
+    "ethereum-waffle": "3.2.1",
     "ethers": "5.0.17"
   }
 }

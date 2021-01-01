@@ -2,14 +2,14 @@ version: "3"
 services:
     chainlink:
         image: smartcontract/chainlink
-        env_file: ./.chainlink-local/.env
+        env_file: ./.chainlink-${network}/.env
         ports:
             - "6688:6688"
-        container_name: chainlink_local
+        container_name: chainlink_${network}
         volumes:
-            - "${PWD}/.chainlink-local:/chainlink"
+            - "${PWD}/.chainlink-${network}:/chainlink"
         restart: on-failure:5
-        command:  "local n -p /chainlink/.password -a /chainlink/.api"
+        entrypoint: sh -c "chainlink local import /chainlink/keyfile && chainlink local n -p /chainlink/.password -a /chainlink/.api"        # command: local import /chainlink/keyfile
         networks:
             - app-network
 
@@ -25,6 +25,7 @@ services:
         volumes:
             - "./ca/server.crt:/var/lib/postgresql/server.crt:ro"
             - "./ca/server.key:/var/lib/postgresql/server.key:ro"
+            - "${PWD}/db:/var/lib/postgresql/data"
         networks:
             - app-network
 
