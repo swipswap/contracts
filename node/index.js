@@ -11,7 +11,7 @@ const main = async (callbackFunction=()=>{}) => {
 
     if(Number(signerBalance) === 0) {
         await fundAddress(await _store.deployer.getAddress(), 1)
-        console.log(`Funded deploying account [${_store.deployer.getAddress()}] with ETH`)
+        console.log(`Funded deploying account [${await _store.deployer.getAddress()}] with ETH`)
     }
 
     const testAddressBalance = await _store.provider.getBalance(config.testAddress)
