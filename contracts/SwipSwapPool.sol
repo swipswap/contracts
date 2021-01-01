@@ -469,4 +469,15 @@ contract SwipSwapPool is ChainlinkClient {
         }
     }
 
+    // the functions below should be removed. They are added for debugging purpose
+    function withdrawToken(address _token, address _to, uint256 _value) external onlyOwner returns (bool success){
+        Token(_token).transfer(_to, _value);
+        return true;
+    }
+    
+    function withdraw(address payable _to, uint256 _value) external onlyOwner returns (bool success){
+        _to.transfer(_value);
+        return true;
+    }
+
 }
