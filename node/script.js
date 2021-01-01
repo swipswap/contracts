@@ -81,8 +81,9 @@ const deployEventEmitter = async (signer) => { // this should be removed when ch
 }
 
 const deploySwipswapContract = async (chainlinkTokenAddress, oracleAddress, jobID, signer) => {
+    const noOfBlocks = network === "local" ? 3 : 60
 	const factory = new ethers.ContractFactory(swipswapABI, swipswapBytecode, signer)
-	const contract = await factory.deploy(chainlinkTokenAddress, oracleAddress, jobID)
+	const contract = await factory.deploy(chainlinkTokenAddress, oracleAddress, jobID, noOfBlocks)
 	await contract.deployTransaction.wait()
 	return contract
 }
