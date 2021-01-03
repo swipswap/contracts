@@ -8,16 +8,16 @@
   },
   "scripts": {
     "hardhat": "./node_modules/.bin/hardhat",
-    "compile": "npm run hardhat compile",
+    "compile": "npx hardhat compile",
     "deploy:local": "npm run hardhat -- run scripts/local/deploy.js",
     "start:local": "cd local_node && docker-compose up -d",
     "restart:local": "cd local_node && docker-compose up -d chainlink",
     "stop:local": "cd local_node && docker-compose down",
     
     "deploy": "npm run hardhat -- run node/index.js",
-    "start": "cd node && docker-compose up -d && sleep 15 && npm run deploy",
+    "start": "npm run compile && cd node && docker-compose up -d && sleep 15 && npm run deploy",
     "restart": "cd local_node && docker-compose up -d chainlink",
-    "rerun": "npm run deploy",
+    "rerun": "npm run compile && npm run deploy",
     "stop": "cd node && docker-compose down"
   },
   "repository": {

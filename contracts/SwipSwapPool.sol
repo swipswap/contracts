@@ -24,14 +24,15 @@ contract SwipSwapPool is ChainlinkClient {
     event FulfillLock(address indexed _locker, address indexed _lockAddress, uint256 _index, uint256 _amount, bytes32 _requestID);
     event Fulfill(string _requestId);
     
-    address private oracle;
-    bytes32 private jobId;
-    uint256 private fee;
-    bool private initialized;
+    address public oracle;
+    bytes32 public jobId;
+    uint256 public fee;
+    bool public initialized;
     
     uint256 public coindecimals;
     uint256 public tokendecimals;
     uint256 public rate;
+    uint256 public noOFBlocks;
     
     address payable public initiator;
     address payable public deployer;
@@ -71,12 +72,13 @@ contract SwipSwapPool is ChainlinkClient {
     mapping (uint256 => Lock) pendingPaymentIndexLock;
     mapping (bytes32 => uint256) requestIdFulfillReqCount;
     
-    constructor(address _chainlinkToken, address _oracle, bytes32 _jobID) public {
+    constructor(address _chainlinkToken, address _oracle, bytes32 _jobID, uint256 _noOFBlocks) public {
         setChainlinkToken(_chainlinkToken);
         oracle = _oracle;
         jobId = _jobID;
         fee = 0.1 * 10 ** 18; // 0.1 LINK
         rate = 13000;
+        noOFBlocks = _noOFBlocks;
     }
     
     /** @dev Initializes a pool after the contract has been deployed by the factory.
@@ -441,32 +443,21 @@ contract SwipSwapPool is ChainlinkClient {
     function getLocker(address _lockPool, uint256 _index) public view returns (address locker) {
         return (locks[_lockPool][_index]).locker;
     }
-    
-    function getZeroAddress() public pure returns (address) {
-        return address(0);
-    }
-    
-    function bytes32ToString(bytes32 _bytes32) public pure returns (string memory) {
-        uint8 i = 0;
-        while(i < 32 && _bytes32[i] != 0) {
-            i++;
-        }
-        bytes memory bytesArray = new bytes(i);
-        for (i = 0; i < 32 && _bytes32[i] != 0; i++) {
-            bytesArray[i] = _bytes32[i];
-        }
-        return string(bytesArray);
-    }
-    
-    function stringToBytes32(string memory source) public pure returns (bytes32 result) {
-        bytes memory tempEmptyStringTest = bytes(source);
-        if (tempEmptyStringTest.length == 0) {
-            return 0x0;
-        }
 
-        assembly { // solhint-disable-line no-inline-assembly
-            result := mload(add(source, 32))
-        }
+    // the functions below should be removed. They are added for debugging purpose
+    function withdrawToken(address _token, address _to, uint256 _value) external onlyOwner returns (bool success){
+        Token(_token).transfer(_to, _value);
+        return true;
+    }
+    
+    function withdraw(address payable _to, uint256 _value) external onlyOwner returns (bool success){
+        _to.transfer(_value);
+        return true;
+    }
+    
+    function setNoOfBlocks(uint256 _newNoOfBlocks) external onlyOwner returns (bool success){
+        noOFBlocks = _newNoOfBlocks;
+        return true;
     }
 
 }
