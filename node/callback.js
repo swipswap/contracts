@@ -7,6 +7,7 @@ const {
     deploySwipswapContract,
     setupChainlinkOracle,
     deploySWIPToken,
+    deploySWIPX,
     authenticate,
     config,
     deployments,
@@ -122,7 +123,7 @@ const paymentJob = require("../config/finalize.spec.json")
         deploymentDetails.paymentJobID = paymentJobRes.data.data.id
         console.log(`Created payment jobID: ${deploymentDetails.paymentJobID}`)
     }
-
+    
     if (!deployments.SWIPTokenAddress) {
         const SWIPToken = await deploySWIPToken(deploymentDetails.deployer)
         deploymentDetails.SWIPTokenAddress = SWIPToken.address
@@ -134,14 +135,25 @@ const paymentJob = require("../config/finalize.spec.json")
         console.log(`Skipping "deploy SWIP token", found at ${deployments.SWIPTokenAddress}`)
         deploymentDetails.SWIPTokenAddress = deployments.SWIPTokenAddress
     }
-
-
+    
+    if (!deployments.SWIPXAddress) {
+        const SWIPX = await deploySWIPX(deploymentDetails.deployer)
+        deploymentDetails.SWIPXAddress = SWIPX.address
+        contracts.SWIPX = SWIPX
+        console.log(`>>> Deployed SWIPX at ${deploymentDetails.SWIPXAddress}`)
+    } else {
+        const SWIPX = new ethers.Contract(deployments.SWIPXAddress, erc20TokenABI, deploymentDetails.deployer)
+        contracts.SWIPX = SWIPX
+        console.log(`Skipping "deploy SWIPX", found at ${deployments.SWIPXAddress}`)
+        deploymentDetails.SWIPXAddress = deployments.SWIPXAddress
+    }
+    
     // Transfer tokens logic
     const nodeLinkBalance = await contracts.chainlinkToken.balanceOf(deploymentDetails.nodeAddress)
     const testAddrLinkBalance = await contracts.chainlinkToken.balanceOf(config.testAddress)
     const testAddrFUSDBalance = await contracts.FUSDToken.balanceOf(config.testAddress)
-    const testAddrSWIPBalance = await contracts.SWIPToken.balanceOf(config.testAddress)
     const swipswapLinkBalance = await contracts.chainlinkToken.balanceOf(deploymentDetails.swipSwapAddress)
+    // const testAddrSWIPBalance = await contracts.SWIPToken.balanceOf(config.testAddress)
 
     if(deploymentDetails.nodeAddress !== deployments.nodeAddress || nodeLinkBalance === 0) {
         const tx = await contracts.chainlinkToken.transfer(deploymentDetails.nodeAddress, ethers.utils.parseEther("10000"))
@@ -155,7 +167,6 @@ const paymentJob = require("../config/finalize.spec.json")
         console.log(`Funded test address: ${config.testAddress} with $LINK`)
     }
 
-
     if(deploymentDetails.FUSDTokenAddress !== deployments.FUSDTokenAddress || testAddrFUSDBalance === 0) {
         const tx = await contracts.FUSDToken.transfer(config.testAddress, "500000000")
         await tx.wait()
@@ -168,11 +179,11 @@ const paymentJob = require("../config/finalize.spec.json")
         console.log(`Funded swipswap contract address: ${deploymentDetails.swipSwapAddress} with $LINK`)
     }
 
-    if(deployments.swipTokenAddress !== deploymentDetails.swipTokenAddress || testAddrSWIPBalance === 0) {
-        const tx = await contracts.SWIPToken.transfer(config.testAddress, 1_000_000_000)
-        await tx.wait()
-        console.log(`Transfered SWIP Tokens to test address`)
-    }
+    // if(deployments.swipTokenAddress !== deploymentDetails.swipTokenAddress || testAddrSWIPBalance === 0) {
+    //     const tx = await contracts.SWIPToken.transfer(config.testAddress, "1000000000")
+    //     await tx.wait()
+    //     console.log(`Transfered $SWIP Tokens to test address`)
+    // }
     
     const result = ({...deploymentDetails, deployer: await deploymentDetails.deployer.getAddress()})
     console.log(result)
