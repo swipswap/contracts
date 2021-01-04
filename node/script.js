@@ -22,7 +22,7 @@ const deployments = config.deployments
 
 
 const connectAndGetProvider = async () => {
-    if(isLocalNetwork){
+    if(network){
         return new ethers.providers.JsonRpcProvider(config.providerUrl)
     }
     const providerNetowrk = ethers.providers.getNetwork(config.network)
