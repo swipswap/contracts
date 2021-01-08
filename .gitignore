@@ -1,8 +1,9 @@
 node_modules/
 build/
-node/.chainlink-local/log.jsonl
-node/.chainlink-local/secret
-node/.chainlink-local/tempkeys
+node/.chainlink-*/log.jsonl
+node/.chainlink-*/secret
+node/.chainlink-*/tempkeys
+
 node/ca/server*
 
 artifacts/

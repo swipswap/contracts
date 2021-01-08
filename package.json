@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "gen:ssl": "cd node/ca && node genSSL.js",
     "hardhat": "./node_modules/.bin/hardhat",
     "compile": "npx hardhat compile",
     "deploy:local": "npm run hardhat -- run scripts/local/deploy.js",
