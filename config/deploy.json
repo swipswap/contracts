@@ -8,12 +8,23 @@
     },
     "goerli": {
         "network": "goerli",
+        "providerUrl": "https://goerli.infura.io/v3/15be5db7406e4da6a3079f577dadb2b5",
         "testAddress": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
         "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular",
-        "etherscan": "7JTNTAD7VNR5F9CZ68JKCZSWI2ATZG7393",
-        "infuraProjectId": "15be5db7406e4da6a3079f577dadb2b5",
-        "infuraProjectSecret": "6038650c6017459d8ec21a95b4c14afe",
-        "alchemy": "9GJ40fZ1PGwqID6jUHOyzdyEsPLqE7Kn"
+        "deployments": {
+            "deployer": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
+            "nodeAddress": "0xbB0EC5D80C39982fb17A54a14D81e615FaEA5C36",
+            "bridgeID": "getpubkeybalance",
+            "chainlinkTokenAddress": "0x13E4652271954Da2E7A7c426e303c6Bc73D4eAeA",
+            "chainlinkOracleAddress": "0x4af69BF3566E72605b6c5F1D6ccE2730F170744C",
+            "FUSDTokenAddress": "0x3a683E2bDd2c08C971c96D87F5a13b08261b7af9",
+            "eventEmitterAddress": "0x2a23D6988a29e4C6742b89c42C79612e21520887",
+            "getAddressJobID": "150d0da1ccb24addbd2aa0a712e4051c",
+            "swipSwapAddress": "0x97e95a645a24A19BF54F57b1B32Cc3aA87E2D5E3",
+            "paymentJobID": "b78ac186897141a6809a439b21e5f66e",
+            "SWIPTokenAddress": "0xc041A77861CAC69CA90D4691a8a081e7078212C7",
+            "SWIPXAddress": "0x9021867f61bEdf231EbC7BA222Cbf32845361AFf"
+        }
     },
     "binance": {
         "rpcEndpoint": "https://data-seed-prebsc-1-s1.binance.org:8545",
