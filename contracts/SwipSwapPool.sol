@@ -284,7 +284,7 @@ contract SwipSwapPool is ChainlinkClient {
         
         Lock memory _newLock = Lock({
             locker: _sender,
-            expBlock: block.number + 3, // this should be changed
+            expBlock: block.number + noOFBlocks, // this should be changed
             coinAmount: _coinAmount, // amount of btc should be supplied and amount of token should be calculated and stored
             tokenAmount: _tokenAmount, 
             isCancelled: false,
