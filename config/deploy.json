@@ -27,9 +27,11 @@
         }
     },
     "binance": {
-        "rpcEndpoint": "https://data-seed-prebsc-1-s1.binance.org:8545",
+        "network": "https://data-seed-prebsc-1-s1.binance.org:8545",
+        "providerUrl": "https://goerli.infura.io/v3/15be5db7406e4da6a3079f577dadb2b5",
         "testAddress": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
-        "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular"
+        "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular",
+        "deployment": {}
     },
     "mainnet":{},
     "deploymentSteps": [
