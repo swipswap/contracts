@@ -31,7 +31,20 @@
         "providerUrl": "https://data-seed-prebsc-1-s1.binance.org:8545",
         "testAddress": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
         "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular",
-        "deployments": {}
+        "deployments": {
+            "deployer": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
+            "nodeAddress": "0xbB0EC5D80C39982fb17A54a14D81e615FaEA5C36",
+            "bridgeID": "getpubkeybalance",
+            "chainlinkTokenAddress": "0xB2d2AC9eB36B0B90410715A12702C2eFa3912412",
+            "chainlinkOracleAddress": "0xEB5756ab92c807D6f77278d65EE141C6df62056b",
+            "FUSDTokenAddress": "0xA1e488124017596d3970ef1dc50921A15632D556",
+            "eventEmitterAddress": "0x13E4652271954Da2E7A7c426e303c6Bc73D4eAeA",
+            "getAddressJobID": "a57cdbaf1241472ea231e46794f6e381",
+            "swipSwapAddress": "0x4af69BF3566E72605b6c5F1D6ccE2730F170744C",
+            "paymentJobID": "c26585ba49c44f0c8887df6ba6084b56",
+            "SWIPTokenAddress": "0x3a683E2bDd2c08C971c96D87F5a13b08261b7af9",
+            "SWIPXAddress": "0x2a23D6988a29e4C6742b89c42C79612e21520887"
+          }
     },
     "mainnet":{},
     "deploymentSteps": [
