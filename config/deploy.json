@@ -31,7 +31,20 @@
         "providerUrl": "https://goerli.infura.io/v3/15be5db7406e4da6a3079f577dadb2b5",
         "testAddress": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
         "mnemonic": "health welcome spin neutral update deer curtain van asthma clean palm regular",
-        "deployment": {}
+        "deployments": {
+            "deployer": "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
+            "nodeAddress": "0xbB0EC5D80C39982fb17A54a14D81e615FaEA5C36",
+            "bridgeID": "getpubkeybalance",
+            "chainlinkTokenAddress": "0x803A3cb5d9e56A7f337C7d19387E45b65FfA71AD",
+            "chainlinkOracleAddress": "0xC8eF8b5Bfe5Eb13801d728Fef8e9442e5BB8B68E",
+            "FUSDTokenAddress": "0xe3550388D6c84381B9B55f2b9a35A7649f609077",
+            "eventEmitterAddress": "0x04CCe397176F2Dd4075a12Fe158f0135868aaFFb",
+            "getAddressJobID": "adfb1c84dcdf4bf19cb286edf358e52b",
+            "swipSwapAddress": "0xBD19CdF6Ed591922724b732FEC6B6d93996Ff171",
+            "paymentJobID": "c51bb52b4a494078bce09eae6b9508bb",
+            "SWIPTokenAddress": "0xc5b0e104F8a0E9fBCFAe6EBDea92ABf8455ce251",
+            "SWIPXAddress": "0x3e6496A64EE1a9BCe4F6D554267137B8E44fc254"
+          }
     },
     "mainnet":{},
     "deploymentSteps": [
