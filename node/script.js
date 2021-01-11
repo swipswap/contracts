@@ -22,18 +22,7 @@ const deployments = config.deployments
 
 
 const connectAndGetProvider = async () => {
-    if(network){
-        return new ethers.providers.JsonRpcProvider(config.providerUrl)
-    }
-    const providerNetowrk = ethers.providers.getNetwork(config.network)
-    return new ethers.providers.getDefaultProvider(providerNetowrk, {
-        etherscan: config.etherscan,
-        infura: {
-            projectId: config.infuraProjectId,
-            projectSecret: config.infuraProjectSecret
-        },
-        alchemy: config.alchemy
-    })
+    return new ethers.providers.JsonRpcProvider(config.providerUrl)
 }
 
 const getDeployer = async (provider) => {
