@@ -28,9 +28,9 @@ MIT
 - It uses chainlink oracles to confirm transactions
 
 ## How it works
-![image](https://user-images.githubusercontent.com/50963972/108633786-32929f00-7444-11eb-8251-cdbb492f7b06.png)
+![image](https://user-images.githubusercontent.com/50963972/108633966-2e1ab600-7445-11eb-8845-15a5beacefdf.png)
 
-![image](https://user-images.githubusercontent.com/50963972/108633804-4b9b5000-7444-11eb-99e5-93ab7f36c5fc.png)
+![image](https://user-images.githubusercontent.com/50963972/108633978-47236700-7445-11eb-9f69-629f7ce86ef0.png)
 
 ## Video Demo
 https://youtu.be/W1_Nfrwn2J4
