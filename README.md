@@ -4,13 +4,14 @@ Repository for swipswap - Binance Hackathon
 # Project Summary
 A cross-chain dex. In this MVP we implement a BTC/FUSD pool. FUSD is a testnet BEP20 token
 
-## Category
+## Binance Hackathon Requirements
+### Category
 DeFi and Asset Management
 
-## License
+### License
 MIT
 
-## Smart Contract Addresses
+### Smart Contract Addresses
 - Chainlink oracle address: 0xEB5756ab92c807D6f77278d65EE141C6df62056b
 
 - Chainlink token address: 0xB2d2AC9eB36B0B90410715A12702C2eFa3912412
