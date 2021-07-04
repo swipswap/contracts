@@ -8,6 +8,7 @@ const {abi: erc20TokenABI, bytecode: erc20TokenBytecode} = require("../artifacts
 const {abi: eventEmitterABI, bytecode: eventEmitterBytecode} = require("../artifacts/contracts/SwipSwapEventEmitter.sol/SwipSwapEventEmitter.json")
 const {abi: swipswapABI, bytecode: swipswapBytecode} = require("../artifacts/contracts/SwipSwapPool.sol/SwipSwapPool.json")
 const {abi: swipTokenABI, bytecode: swipTokenBytecode} = require("../artifacts/contracts/SwipToken.sol/SwipToken.json")
+const {abi: swipxABI, bytecode: swipxBytecode} = require("../artifacts/contracts/Swipx.sol/Swipx.json")
 
 const network = process.env.network
 const isLocalNetwork = network === 'local'
@@ -21,18 +22,7 @@ const deployments = config.deployments
 
 
 const connectAndGetProvider = async () => {
-    if(isLocalNetwork){
-        return new ethers.providers.JsonRpcProvider(config.providerUrl)
-    }
-    const providerNetowrk = ethers.providers.getNetwork(config.network)
-    return new ethers.providers.getDefaultProvider(providerNetowrk, {
-        etherscan: config.etherscan,
-        infura: {
-            projectId: config.infuraProjectId,
-            projectSecret: config.infuraProjectSecret
-        },
-        alchemy: config.alchemy
-    })
+    return new ethers.providers.JsonRpcProvider(config.providerUrl)
 }
 
 const getDeployer = async (provider) => {
@@ -98,7 +88,14 @@ const setupChainlinkOracle = async (signer, linkToken, nodeAddress) => {
 
 const deploySWIPToken = async (signer) => {
 	const factory = new ethers.ContractFactory(swipTokenABI, swipTokenBytecode, signer)
-	const contract = await factory.deploy(10_000, 1_000_000_000)
+	const contract = await factory.deploy()
+	await contract.deployTransaction.wait()
+	return contract
+}
+
+const deploySWIPX = async (signer) => {
+	const factory = new ethers.ContractFactory(swipxABI, swipxBytecode, signer)
+	const contract = await factory.deploy()
 	await contract.deployTransaction.wait()
 	return contract
 }
@@ -175,6 +172,7 @@ module.exports = {
     deploySwipswapContract,
     setupChainlinkOracle,
     deploySWIPToken,
+    deploySWIPX,
     sleep,
     getNodeAddress,
     authenticate,

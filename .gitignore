@@ -1,45 +1,10 @@
-.secret
 node_modules/
 build/
-node/.chainlink-local/log.jsonl
-node/.chainlink-local/secret
-node/.chainlink-local/tempkeys
-binance_node/.chainlink-binance/
-binance_node/.chainlink-binance/
-binance_node/.chainlink-binance/
-goerli_node/.chainlink-goerli/
-goerli_node/.chainlink-goerli/
-goerli_node/.chainlink-goerli/
-kovan_node/.chainlink-ropsten/
-kovan_node/.chainlink-ropsten/
-kovan_node/.chainlink-ropsten/
-local_node/.chainlink-local/l
-local_node/.chainlink-local
-local_node/.chainlink-local/
-ropsten_node/.chainlink-ropsten/
-ropsten_node/.chainlink-ropsten/
-ropsten_node/.chainlink-ropsten/
-.chainlink-local/log.json
-.chainlink-local/secret
-.chainlink-local/tempkeys
+node/.chainlink*
 
-node/db/
-ropsten_node/db/
-kovan_node/db/
-goerli_node/db/
-binance_node/db/
-
+node/ca/server*
 
 artifacts/
 cache/
-binance_node/db
-goerli_node/db
-.chainlink/
-
-
-.chainlink-binance/
-.chainlink-goerli/
-.chainlink-ropsten/
-.chainlink-kovan/
 
 scripts/
